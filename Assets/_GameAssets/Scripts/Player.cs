@@ -62,10 +62,9 @@ public class Player : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         playerAnimator = this.GetComponent<Animator>();
         //Recupera la posición del último checkpoint
-        PosicionEscena posEscena = GameConfig.GetPosicionEscena();
-        if (posEscena.getPosicion() != Vector3.zero) {
-            SceneManager.LoadScene(posEscena.getEscena());
-            this.transform.position = posEscena.getPosicion();
+        Vector3 posicion = GameConfig.GetPosicion();
+        if (posicion != Vector3.zero) {
+          this.transform.position = posicion;
         }
     }
 
@@ -78,6 +77,7 @@ public class Player : MonoBehaviour
         MostrarBarraDeVida();
         MostrarBarraDeEnergia();
         MostrarBarraDeCombustible();
+        SalirAMenu();
     }
 
 
@@ -239,7 +239,7 @@ public class Player : MonoBehaviour
         int gastoEnergiaLanzallamas = 5;
         int gastoEnergiaLaser = 2;
 
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.S) && energiaArmas  > 0)
         {
             if (estado == estadoPlayer.parado)
             {
@@ -345,10 +345,14 @@ public class Player : MonoBehaviour
         {
             Mathf.Max(--vidas, 0);
             cs.RestarVida();
+            if (vidas == 0)
+            {
+                Morir();
+            }
         }
-        
 
-        
+
+
     }
 
     public void IncrementarCombustible(int cantidadCombustible)
@@ -371,6 +375,7 @@ public class Player : MonoBehaviour
     {
         puntuacion++;
         puntuacionTxt.text = puntuacion.ToString();
+        GameConfig.StorePuntuacion(SceneManager.GetActiveScene().buildIndex, puntuacion);
     }
 
     public int getPuntuacion()
@@ -476,8 +481,21 @@ public class Player : MonoBehaviour
         mostrarEnergia = !mostrarEnergia;
     }
 
-    public void morir() {
+    public void Morir() {
         GameConfig.StorePuntuacion(SceneManager.GetActiveScene().buildIndex, puntuacion);
-        Destroy(this.gameObject);
+        SceneManager.LoadScene(0);
+    }
+
+    public void setPosicion(Vector3 posicion)
+    {
+        this.transform.position = posicion;
+    }
+
+    private void SalirAMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }

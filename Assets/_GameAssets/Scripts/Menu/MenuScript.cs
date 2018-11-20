@@ -5,29 +5,41 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour {
-    int nivelMaximo = SceneManager.sceneCount;
-    [SerializeField] Text[] puntuacionNivelesTxt = new Text[SceneManager.sceneCount];
+
+    [SerializeField] Text puntuacionNivel1Txt;
+    [SerializeField] Text puntuacionNivel2Txt;
+    [SerializeField] GameObject panelMenu;
+    [SerializeField] GameObject panelStats;
 
 
 
     public void StartGame()
     {
-        SceneManager.LoadScene(1);
+        GameConfig.CargarEscena(true);
+
     }
 
-    public void ContinueGame() {
-
+    public void ContinueGame()
+    {
+        GameConfig.CargarEscena(false);
     }
 
     public void Stats() {
-        for(int i = 1; i <= nivelMaximo; i++) {
-            puntuacionNivelesTxt[i - 1].text = GameConfig.GetPuntuacion(i).ToString();
-        }
+        panelMenu.SetActive(false);
+        panelStats.SetActive(true);
+        puntuacionNivel1Txt.text = GameConfig.GetPuntuacion(1).ToString();
+        puntuacionNivel2Txt.text = GameConfig.GetPuntuacion(2).ToString();
 
     }
 
     public void QuitGame() {
         Application.Quit();
+    }
+
+    public void Back()
+    {
+        panelStats.SetActive(false);
+        panelMenu.SetActive(true);
     }
 
 }

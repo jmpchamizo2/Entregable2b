@@ -1889,7 +1889,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1017340405296674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 95, y: 500, z: 7.5}
+  m_LocalPosition: {x: 45, y: 500, z: 7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4228256834935688}
@@ -2679,6 +2679,13 @@ MonoBehaviour:
   disparoVolando: {fileID: 4453964119442688}
   disparoTierra: {fileID: 4230594402356102}
   energiaArmas: 100
+  puntuacionTxt: {fileID: 0}
+  frontalBarraVida: {fileID: 0}
+  frontalBarraCombustible: {fileID: 0}
+  frontalBarraEnergia: {fileID: 0}
+  barraVida: {fileID: 0}
+  barraCombustible: {fileID: 0}
+  barraEnergia: {fileID: 0}
 --- !u!137 &137297840305888270
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameConfig : MonoBehaviour {
     private const string XPOS = "xPos";
     private const string YPOS = "yPos";
     private const string ZPOS = "zPos";
     private const string SCENE = "scene";
+    public static bool llamadoDesdeStartGame = false;
 
 
 
@@ -18,23 +20,32 @@ public class GameConfig : MonoBehaviour {
         PlayerPrefs.Save();
     }
 
-    public static PosicionEscena GetPosicionEscena() {
-        Vector3 position;
-        int escena;
-        if (PlayerPrefs.HasKey(XPOS) && PlayerPrefs.HasKey(YPOS)) {
+
+    public static Vector3 GetPosicion() {
+        Vector3 position = Vector3.zero;
+        if (!llamadoDesdeStartGame && PlayerPrefs.HasKey(XPOS)) {
             float x = PlayerPrefs.GetFloat(XPOS);
             float y = PlayerPrefs.GetFloat(YPOS);
             float z = PlayerPrefs.GetFloat(ZPOS);
-            escena = PlayerPrefs.GetInt(SCENE);
             position = new Vector3(x, y, z);
-        } else {
-            position = Vector3.zero;
-            escena = 0;
+            
         }
-        return new PosicionEscena(position, escena);
+        return position;
     }
 
-
+    //Ponemos un bool que se encargará de controlar si el personaje debe empezar desde 0
+    //ya que el método ha sido llamado desde el StartGame en Menu o debe continuar desde 
+    //donde estaba grabado que es el resto de los casos
+    public static void CargarEscena(bool _llamadoDesdeStartGame)
+    {
+        llamadoDesdeStartGame = _llamadoDesdeStartGame;
+        int escena = 1;
+        if (!llamadoDesdeStartGame)
+        {
+            escena = PlayerPrefs.GetInt(SCENE);
+        }
+        SceneManager.LoadScene(escena);
+    }
 
 
 
