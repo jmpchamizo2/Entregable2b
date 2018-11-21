@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraScript : MonoBehaviour
+public class VidasScript : MonoBehaviour
 {
     [SerializeField] GameObject prefabAvatarVida;
     [SerializeField] GameObject player;
-    Vector3 correcionSiguienteAvatarVida = new Vector3(0.05f, 0.01f, 0.497f);
+    Vector3 correcionSiguienteAvatarVida = new Vector3(0, 0, 0.497f);
     GameObject[] avataresVida;
-    Vector3 posicionInicialAvatarVida = new Vector3(59.87777f, 507.78f, 11.44031f);
+    Vector3 posicionInicialAvatarVida = new Vector3(84.02F, 513.77f, 14.06f);
 
     private void Start()
     {
         avataresVida = new GameObject[player.GetComponent<Player>().getVidasMaximas()];
         for (int i = 0; i < avataresVida.Length; i++)
         {
-            avataresVida[i] = Instantiate(prefabAvatarVida, posicionInicialAvatarVida + (correcionSiguienteAvatarVida * i), Quaternion.Euler(0, 90, 0), this.transform);
+            avataresVida[i] = Instantiate(prefabAvatarVida, this.transform);
         }
         RestarVida();
     }

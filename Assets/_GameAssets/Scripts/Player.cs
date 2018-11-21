@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public enum estadoPlayer { parado, andandoIzq, andandoDer, corriendoIzq,  corriendoDer, volando, nadando, inmune, sinEstado }
+public enum estadoPlayer { parado, andandoIzq, andandoDer, corriendoIzq,  corriendoDer, volando, nadando, inmune, sinEstado, muerto }
 
 public class Player : MonoBehaviour
 {
@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
     [SerializeField] CanvasGroup barraVida;
     [SerializeField] CanvasGroup barraCombustible;
     [SerializeField] CanvasGroup barraEnergia;
+    [SerializeField] GameObject gameOverMenu;
 
 
 
@@ -66,27 +67,33 @@ public class Player : MonoBehaviour
         if (posicion != Vector3.zero) {
           this.transform.position = posicion;
         }
+        gameOverMenu.SetActive(false);
     }
 
     private void Update()
     {
-        CorrerEstaApretado();
-        IgnicionEstaApretado();
+        if(estado != estadoPlayer.muerto) {
+            CorrerEstaApretado();
+            IgnicionEstaApretado();
+            Disparar();
+        }
         Animar();
-        Disparar();
         MostrarBarraDeVida();
         MostrarBarraDeEnergia();
         MostrarBarraDeCombustible();
         SalirAMenu();
+
     }
 
 
     private void FixedUpdate()
     {
-        zPos = Input.GetAxis("Horizontal");
-        ySpeedActual = rb.velocity.y;
-        VolarSaltarCaminar();
-        CambiarDireccion();
+        if (estado != estadoPlayer.muerto) {
+            zPos = Input.GetAxis("Horizontal");
+            ySpeedActual = rb.velocity.y;
+            VolarSaltarCaminar();
+            CambiarDireccion();
+        }
         
     }
 
@@ -163,8 +170,7 @@ public class Player : MonoBehaviour
         }
         if (zPos < 0.01f && zPos > -0.01f)
         {
-            if (this.estado != estadoPlayer.volando && EstaEnSuelo())
-            {
+            if (this.estado != estadoPlayer.volando && EstaEnSuelo()) {
                 estadoNuevo = estadoPlayer.parado;
             }
         }
@@ -194,7 +200,12 @@ public class Player : MonoBehaviour
             frontalBarraCombustible.fillAmount = (float)cantidadCombustibleDeVuelo / cantidadDeCombustibleMaxima;
             MostrarCombustible();
         }
-        rb.velocity = new Vector3(0, velocidadY, zPos * velocidad);
+        if (Mathf.Abs(zPos) > 0.01f || ignicion) {
+            rb.velocity = new Vector3(0, velocidadY, zPos * velocidad);
+        } else {
+            //rb.velocity = new Vector3(0, velocidadY, 0);
+        }
+
 
 
     }
@@ -335,16 +346,16 @@ public class Player : MonoBehaviour
 
     public void ModificarVida(bool aumentar)
     {
-        CameraScript cs = FindObjectOfType<CameraScript>();
+        VidasScript vs = FindObjectOfType<VidasScript>();
         if (aumentar)
         {
             Mathf.Min(++vidas, vidasMaximas);
-            cs.SumarVida();
+            vs.SumarVida();
         }
         else
         {
             Mathf.Max(--vidas, 0);
-            cs.RestarVida();
+            vs.RestarVida();
             if (vidas == 0)
             {
                 Morir();
@@ -483,7 +494,8 @@ public class Player : MonoBehaviour
 
     public void Morir() {
         GameConfig.StorePuntuacion(SceneManager.GetActiveScene().buildIndex, puntuacion);
-        SceneManager.LoadScene(0);
+        gameOverMenu.SetActive(true);
+        estado = estadoPlayer.muerto;
     }
 
     public void setPosicion(Vector3 posicion)

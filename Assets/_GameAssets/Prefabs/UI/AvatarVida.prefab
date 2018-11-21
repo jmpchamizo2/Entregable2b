@@ -63,7 +63,7 @@ GameObject:
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4384852409970732}
+  - component: {fileID: 224732425389615562}
   - component: {fileID: 95012951034086858}
   m_Layer: 0
   m_Name: AvatarVida
@@ -1229,7 +1229,7 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4384852409970732}
+  m_Father: {fileID: 224732425389615562}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4182857164214786
@@ -1336,7 +1336,7 @@ Transform:
   - {fileID: 4939079689111710}
   - {fileID: 4707194102404102}
   - {fileID: 4206654978613512}
-  m_Father: {fileID: 4384852409970732}
+  m_Father: {fileID: 224732425389615562}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4258089332237798
@@ -1349,7 +1349,7 @@ Transform:
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4384852409970732}
+  m_Father: {fileID: 224732425389615562}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4303178841506796
@@ -1421,22 +1421,6 @@ Transform:
   m_Father: {fileID: 4042167554912428}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4384852409970732
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1054108918112084}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_Children:
-  - {fileID: 4249059344020564}
-  - {fileID: 4144743868267466}
-  - {fileID: 4258089332237798}
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!4 &4405636395320634
 Transform:
   m_ObjectHideFlags: 1
@@ -2192,3 +2176,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0017001629, y: -0.14558595, z: -0.014357321}
     m_Extent: {x: 0.92397296, y: 0.9161112, z: 0.22193623}
   m_DirtyAABB: 0
+--- !u!224 &224732425389615562
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1054108918112084}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_Children:
+  - {fileID: 4249059344020564}
+  - {fileID: 4144743868267466}
+  - {fileID: 4258089332237798}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0, y: 1}
