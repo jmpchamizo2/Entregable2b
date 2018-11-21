@@ -106,9 +106,12 @@ GameObject:
   - component: {fileID: 23033267457087222}
   - component: {fileID: 95323615147664304}
   - component: {fileID: 114402159807187134}
+  - component: {fileID: 65197461743625088}
+  - component: {fileID: 65465975291519898}
+  - component: {fileID: 114567972553507242}
   m_Layer: 0
   m_Name: SciFi-Tower_Rocket Launcher
-  m_TagString: Untagged
+  m_TagString: Enemigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -180,7 +183,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1204173628296350}
   m_LocalRotation: {x: -0.99993986, y: -0, z: -0.010974702, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4033778355599632}
@@ -196,7 +199,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1569664578830852}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 45, y: 500.61017, z: 17.115952}
+  m_LocalPosition: {x: 45, y: 500.15, z: 22.215729}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4334216709582744}
@@ -342,6 +345,30 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1569664578830852}
   m_Mesh: {fileID: 4300000, guid: 01ab59fa4ffa9534fb5f4179fa50371d, type: 3}
+--- !u!65 &65197461743625088
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569664578830852}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.3177217, y: 1.95299, z: 1.2599177}
+  m_Center: {x: -0.12805033, y: 0.8239505, z: 0.0427503}
+--- !u!65 &65465975291519898
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569664578830852}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.77231, y: 0.152453, z: 2.5478556}
+  m_Center: {x: 0.00000023841858, y: -0.076318055, z: -0.00000047683713}
 --- !u!82 &82354712665111224
 AudioSource:
   m_ObjectHideFlags: 1
@@ -482,6 +509,26 @@ MonoBehaviour:
   fuerzaMisil: 100
   danyoMisil: 20
   sonidoExplosion: {fileID: 82354712665111224}
+--- !u!114 &114567972553507242
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1569664578830852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 904a8ef0cb7fcb241be4c524264ca08f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  estaVivo: 1
+  vidaActual: 10
+  danyo: 2
+  distanciaDeteccion: 20
+  distanciaAtaque: 5
+  prefabProyectil: {fileID: 0}
+  posGeneracion: {fileID: 0}
+  potenciaDisparo: 1000
+  tiempoEntreDisparos: 2
 --- !u!198 &198098631841523746
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -17265,7 +17312,7 @@ ParticleSystem:
     m_Dampen:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.02
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -17318,7 +17365,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -17371,7 +17418,7 @@ ParticleSystem:
     m_EnergyLossOnCollision:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -17423,7 +17470,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.05
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295

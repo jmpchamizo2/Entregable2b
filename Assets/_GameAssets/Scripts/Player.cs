@@ -36,11 +36,11 @@ public class Player : MonoBehaviour
     [Header("FX")]
     [SerializeField] ParticleSystem explosionIgnicion;
     [SerializeField] AudioSource sonidoIgnicion;
-    [SerializeField] ParticleSystem lanzallamas;
-    [SerializeField] ParticleSystem laser;
+    [SerializeField] GameObject laser;
     [Header("Armas")]
     [SerializeField] Transform disparoVolando;
     [SerializeField] Transform disparoTierra;
+    [SerializeField] int fuerzaDisparo = 5000;
     [SerializeField] int energiaArmas = 100;
     private int energiaMaximaArmas = 100;
     private int puntuacion = 0;
@@ -153,11 +153,15 @@ public class Player : MonoBehaviour
     {
         if (zPos > 0.01f) {
             this.transform.localScale = new Vector3(1, 1, 1);
+            disparoTierra.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+            disparoVolando.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
             CorriendoOAndando();
 
         }
         if (zPos < -0.01f) {
             this.transform.localScale = new Vector3(1, 1, -1);
+            disparoTierra.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+            disparoVolando.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
             CorriendoOAndando();
         }
         if (zPos < 0.01f && zPos > -0.01f) {
@@ -243,30 +247,18 @@ public class Player : MonoBehaviour
     private void Disparar()
     {
         Transform posicionDisparo = null;
-        ParticleSystem ps = null;
-        int tiempoParaDesaparecer = 2;
-        int gastoEnergiaLanzallamas = 5;
         int gastoEnergiaLaser = 2;
 
         if (Input.GetKeyDown(KeyCode.S) && energiaArmas  > 0)
         {
-            if (estado == estadoPlayer.parado)
-            {
-                posicionDisparo = disparoVolando;
-                ps = Instantiate(lanzallamas, posicionDisparo.transform);
-                energiaArmas -= gastoEnergiaLanzallamas;
-            }
-            else
-            {
-                posicionDisparo = disparoTierra;
-                ps = Instantiate(laser, posicionDisparo.transform);
-                energiaArmas -= gastoEnergiaLaser;
-            }
+            GameObject proyectil;
+            posicionDisparo = (estado != estadoPlayer.volando) ? disparoVolando : disparoTierra;
+            proyectil = Instantiate(laser, posicionDisparo.transform);
+            proyectil.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * fuerzaDisparo);
+            energiaArmas -= gastoEnergiaLaser;
             energiaArmas = Mathf.Max(energiaArmas, 0);
             frontalBarraEnergia.fillAmount = (float)energiaArmas / energiaMaximaArmas;
             MostrarEnergia();
-            ps.Play();
-            Destroy(ps.gameObject, tiempoParaDesaparecer);
             
         }
     }

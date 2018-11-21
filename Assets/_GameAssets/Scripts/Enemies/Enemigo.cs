@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemigo : Personaje
+public class Enemigo : Personaje
 {
     [Header("ATAQUE")]
     [SerializeField] protected int distanciaDeteccion = 20;

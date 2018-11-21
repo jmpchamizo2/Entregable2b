@@ -37,7 +37,7 @@ public class MetaScript : MonoBehaviour
             ignicion = true;
         }
         
-        //Invoke("SubirNivel", 5);
+        Invoke("SubirNivel", 5);
 
     }
 

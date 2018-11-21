@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4996893824379410}
   - component: {fileID: 33579259161283682}
   - component: {fileID: 23949574546560638}
+  - component: {fileID: 114766323758870086}
   m_Layer: 0
   m_Name: Inmunidad
   m_TagString: Untagged
@@ -34,8 +35,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1551118702190298}
-  m_LocalRotation: {x: 1, y: 0, z: -0, w: 0.000000021855694}
-  m_LocalPosition: {x: 44.86, y: 500, z: 18.507795}
+  m_LocalRotation: {x: 1, y: -0, z: -0, w: 0.00000004371139}
+  m_LocalPosition: {x: 0, y: -9.95624, z: -42.15452}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.15}
   m_Children: []
   m_Father: {fileID: 0}
@@ -83,3 +84,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1551118702190298}
   m_Mesh: {fileID: 4300000, guid: 437c29dfb214ee94cb242f6fd612eaa1, type: 3}
+--- !u!114 &114766323758870086
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551118702190298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61fbab8c28b56b54e85f1fcf1c022051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tiempoInmune: 10
