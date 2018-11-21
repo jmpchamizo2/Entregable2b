@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public enum estadoPlayer { parado, andandoIzq, andandoDer, corriendoIzq,  corriendoDer, volando, nadando, inmune, sinEstado, muerto }
+public enum estadoPlayer { parado, andando, corriendo, volando, nadando, sinEstado, muerto }
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     bool mostrarVida = false;
     bool mostrarCombustible = false;
     bool mostrarEnergia = false;
+    bool inmune = false;
 
     [Header ("Características")]
     [SerializeField] int velocidad;
@@ -150,30 +151,29 @@ public class Player : MonoBehaviour
 
     private void CambiarDireccion()
     {
-        estadoPlayer estadoNuevo = estadoPlayer.sinEstado;
-        if (zPos > 0.01f)
-        {
+        if (zPos > 0.01f) {
             this.transform.localScale = new Vector3(1, 1, 1);
-            if (this.estado != estadoPlayer.volando && EstaEnSuelo())
-            {
-                estadoNuevo = (corriendo) ? estadoPlayer.corriendoDer : estadoPlayer.andandoDer;
-            }
+            CorriendoOAndando();
 
         }
-        if (zPos < -0.01f)
-        {
+        if (zPos < -0.01f) {
             this.transform.localScale = new Vector3(1, 1, -1);
-            if (this.estado != estadoPlayer.volando && EstaEnSuelo())
-            {
-                estadoNuevo = (corriendo) ? estadoPlayer.corriendoIzq : estadoPlayer.andandoIzq;
-            }
+            CorriendoOAndando();
         }
-        if (zPos < 0.01f && zPos > -0.01f)
-        {
+        if (zPos < 0.01f && zPos > -0.01f) {
             if (this.estado != estadoPlayer.volando && EstaEnSuelo()) {
-                estadoNuevo = estadoPlayer.parado;
+                CambioEstado(estadoPlayer.parado);
             }
         }
+       
+    }
+
+    private void CorriendoOAndando() {
+        estadoPlayer estadoNuevo = estadoPlayer.sinEstado;
+        if (this.estado != estadoPlayer.volando && EstaEnSuelo()) {
+            estadoNuevo = (corriendo) ? estadoPlayer.corriendo : estadoPlayer.andando;
+        }
+
         CambioEstado(estadoNuevo);
     }
 
@@ -202,8 +202,6 @@ public class Player : MonoBehaviour
         }
         if (Mathf.Abs(zPos) > 0.01f || ignicion) {
             rb.velocity = new Vector3(0, velocidadY, zPos * velocidad);
-        } else {
-            //rb.velocity = new Vector3(0, velocidadY, 0);
         }
 
 
@@ -300,34 +298,36 @@ public class Player : MonoBehaviour
 
     private void CambioEstado(estadoPlayer estado)
     {
-        if (this.estado != estadoPlayer.nadando && this.estado != estadoPlayer.inmune && estado != estadoPlayer.nadando && estado != estadoPlayer.inmune && estado != estadoPlayer.sinEstado)
+        if (this.estado != estadoPlayer.nadando && estado != estadoPlayer.nadando && estado != estadoPlayer.sinEstado)
         { 
             this.estado = estado;
         }
         
     }
 
-    private void Inmunizar(float tiempo)
+    public void Inmunizar(float tiempo)
     {
-        this.estado = estadoPlayer.inmune;
+        inmune = true; ;
         Invoke("QuitarInmunidad", tiempo);
     }
 
     private void QuitarInmunidad()
     {
-        this.estado = estadoPlayer.parado;
+        inmune = false;
     }
 
     public void RecibirDanyo(int danyo)
     {
-        salud -= danyo;
-        if (salud < 0)
-        {
-            salud += saludMaxima;
-            ModificarVida(false);
+        if(!inmune) {
+            salud -= danyo;
+            if (salud < 0) {
+                salud += saludMaxima;
+                ModificarVida(false);
+            }
+            frontalBarraVida.fillAmount = (float)salud / saludMaxima;
+            MostrarVida();
         }
-        frontalBarraVida.fillAmount = (float)salud / saludMaxima;
-        MostrarVida();
+        
     }
 
     public void Sanar(int sanacion)
